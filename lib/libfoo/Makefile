@@ -72,6 +72,7 @@ $(SRC_DIR) $(OBJ_DIR) $(INC_DIR):
 clean:
 	rm -rf $(OBJ_DIR)
 	rm -f $(TARGET_FILE)
+	rm -f $(TARGET_HEADER)
 
 # Phony target
 .PHONY: clean
