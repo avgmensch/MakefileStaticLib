@@ -43,7 +43,7 @@ all: $(TARGET_FILE) $(TARGET_HEADER)
 
 # Link objects
 $(TARGET_FILE): $(OBJ_FILES)
-	if [ -f "$@" ]; then rm -r "$@"; fi
+	if [ -f "$@" ]; then rm -f "$@"; fi
 	$(AR) $(ARFLAGS) $@ $^
 
 # Include deps
