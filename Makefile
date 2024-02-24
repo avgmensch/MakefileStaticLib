@@ -2,6 +2,9 @@
 # General settings
 # ===========================
 
+# Metadata
+MKFILEPATH = Makefile
+
 # Compiler setup
 CC = gcc
 CFLAGS = -Os -Wall -Wextra
@@ -40,7 +43,7 @@ $(TARGET_FILE): $(OBJ_FILES)
 -include $(DEP_FILES)
 
 # Compile objects
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(MKFILEPATH) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
 
 # ===========================
