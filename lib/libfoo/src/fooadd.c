@@ -2,7 +2,7 @@
 
 int fooadd(int argc, ...)
 {
-    if (argc < 1) return;
+    if (argc < 1) return 0;
 
     va_list argptr;
     va_start(argptr, argc);
