@@ -15,6 +15,11 @@ SRC_DIR = src/
 OBJ_DIR = .obj/
 INC_DIR = inc/
 
+# Required libraries
+LIB_NAMES = foo
+LIB_TARGETS = lib/libfoo/libfoo.a
+LIB_INCS = lib/libfoo/libfoo.h
+
 # Define / get files
 SRC_FILES = $(wildcard $(SRC_DIR)*.c)
 OBJ_FILES = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRC_FILES))
@@ -25,8 +30,14 @@ TARGET_FILE = my_program
 # Extended settings
 # ===========================
 
-# Update compiler setup
-CFLAGS += $(addprefix -I,$(INC_DIR))
+# Append include dirs to CFLAGS
+CFLAGS += $(addprefix -I,$(INC_DIR) $(dir $(LIB_INCS)))
+
+# Append directoris of libraries to LDFLAGS
+LDFLAGS += $(addprefix -L,$(dir $(LIB_TARGETS)))
+
+# Set libraries to use then linking
+LDLIBS = $(addprefix -l,$(LIB_NAMES))
 
 # ===========================
 # Compile executable
@@ -36,8 +47,8 @@ CFLAGS += $(addprefix -I,$(INC_DIR))
 all: $(TARGET_FILE)
 
 # Link objects
-$(TARGET_FILE): $(OBJ_FILES)
-	$(CC) $(LDFLAGS) $^ -o $@
+$(TARGET_FILE): $(LIB_TARGETS) $(OBJ_FILES)
+	$(CC) $(LDFLAGS) $(OBJ_FILES) $(LDLIBS) -o $@
 
 # Include deps
 -include $(DEP_FILES)
@@ -45,6 +56,13 @@ $(TARGET_FILE): $(OBJ_FILES)
 # Compile objects
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(MKFILEPATH) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
+
+# ===========================
+# Compile libraries
+# ===========================
+
+$(LIB_TARGETS): FORCE
+	make -C $(dir $@)
 
 # ===========================
 # Create dirs
@@ -64,6 +82,10 @@ run: $(TARGET_FILE)
 clean:
 	rm -rf $(OBJ_DIR)
 	rm -f $(TARGET_FILE)
+	for libdir in $(dir $(LIB_TARGETS)); do make -C $$libdir clean; done
+
+# Forces executing a target
+FORCE:
 
 # Phony target
-.PHONY: run clean
+.PHONY: run clean FORCE

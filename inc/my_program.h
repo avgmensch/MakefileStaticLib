@@ -5,6 +5,8 @@
 #include <stdio.h> // printf
 #include <string.h> // strcat
 
+#include "libfoo.h" // fooadd foomultiply
+
 // ==========================
 // src/hello.c
 // ==========================
