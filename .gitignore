@@ -1,2 +1,4 @@
 .obj/
 my_program
+lib*.h
+*.a
