@@ -2,3 +2,4 @@
 my_program
 lib*.h
 *.a
+*.log

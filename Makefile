@@ -83,8 +83,10 @@ run: $(TARGET_FILE)
 clean:
 	rm -rf $(OBJ_DIR)
 	rm -f $(TARGET_FILE)
-	rm -f $(BUILDLOGFILE)
 	for libdir in $(dir $(LIB_TARGETS)); do make -C $$libdir clean; done
+
+clean-logs:
+	rm -f $(BUILDLOGFILE)
 
 # Forces executing a target
 FORCE:
