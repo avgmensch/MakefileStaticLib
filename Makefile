@@ -4,6 +4,7 @@
 
 # Metadata
 MKFILEPATH = Makefile
+BUILDLOGFILE = Makefile.log
 
 # Compiler setup
 CC = gcc
@@ -82,6 +83,7 @@ run: $(TARGET_FILE)
 clean:
 	rm -rf $(OBJ_DIR)
 	rm -f $(TARGET_FILE)
+	rm -f $(BUILDLOGFILE)
 	for libdir in $(dir $(LIB_TARGETS)); do make -C $$libdir clean; done
 
 # Forces executing a target
