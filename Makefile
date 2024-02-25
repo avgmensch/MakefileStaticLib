@@ -32,7 +32,8 @@ TARGET_FILE = my_program
 # ===========================
 
 # Append include dirs to CFLAGS
-CFLAGS += $(addprefix -I,$(INC_DIR) $(dir $(LIB_INCS)))
+INC_DIR += $(dir $(LIB_INCS))
+CFLAGS += $(addprefix -I,$(INC_DIR))
 
 # Append directoris of libraries to LDFLAGS
 LDFLAGS += $(addprefix -L,$(dir $(LIB_TARGETS)))
